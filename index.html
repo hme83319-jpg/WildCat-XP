@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>WILDCAT XP</title>
+<!-- Fixed Google Fonts import for Press Start 2P -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link href="https://gstatic.com" rel="preconnect" crossorigin>
+<link href="https://googleapis.com" rel="stylesheet">
+<meta
+    name="description"
+    content="FEARN is the world's most popular subscription-based learning site for K–12. Used by over 52 million students, FEARN provides personalized learning in more than 17,000 topics, covering math, language arts, science, social studies, and Spanish. Interactive questions, awards, and certificates keep kids motivated as they master skills."
+/>
+
+<style> 
+ html {
+    /* Forces the vertical scrollbar to always show */
+    overflow-y: scroll; 
+}
+
+:root { 
+  --bg-main: #ffffff; 
+  --text-main: #111111; 
+  --nav-bg: rgba(0, 0, 0, 0.05); 
+  --sidebar-bg: #f3f3f3;
+  --transition-speed: 0.4s; 
+  --panel-bg: #ffffff;
+  --btn-bg: #e0e0e0;
+  --btn-hover: #d0d0d0;
+} 
+[data-theme="dark"] { 
+  --bg-main: #000000; 
+  --text-main: #f3f3f3; 
+  --nav-bg: rgba(255, 255, 255, 0.05); 
+  --sidebar-bg: #1a1a1a;
+  --panel-bg: #222222;
+  --btn-bg: #333333;
+  --btn-hover: #444444;
+} 
+
+/* Automatic dark mode fallback if no manual toggle is set */ 
+@media (prefers-color-scheme: dark) { 
+  :root:not([data-theme="light"]) { 
+    --bg-main: #000000; 
+    --text-main: #f3f3f3; 
+    --nav-bg: rgba(255, 255, 255, 0.05); 
+    --sidebar-bg: #1a1a1a;
+    --panel-bg: #222222;
+    --btn-bg: #333333;
+    --btn-hover: #444444;
+  } 
+} 
+
+body { 
+  background-color: var(--bg-main); 
+  color: var(--text-main); 
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease; 
+  margin: 0; 
+  font-family: 'Press Start 2P', Verdana, sans-serif; 
+} 
+
+html {
+    scrollbar-width: thin;
+    scrollbar-color: #888888 #f1f1f1; 
+}
+
+html::-webkit-scrollbar {
+    width: 12px; 
+}
+
+html::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+html::-webkit-scrollbar-thumb {
+    background: #888888;
+    border-radius: 6px;   
+}
+
+html::-webkit-scrollbar-thumb:hover {
+    background: #555555; 
+}
+
+.h1 {
+    position: fixed; 
+  top: 20px; 
+  left: 50%; 
+  font-size: 60px;
+
+  transform: translateX(-50%) rotate(0deg); 
+  letter-spacing: 4px; 
+  text-transform: uppercase; 
+  white-space: nowrap; 
+
+  animation: crt-flicker 0.2s infinite, float-around 10s ease-in-out infinite; 
+  z-index: 1000; 
+} 
+
+.h1 span:nth-child(1), .h1 span:nth-child(2) { 
+  color: #ff0000; 
+  text-shadow: 4px 4px 0px #550000, 8px 8px 0px rgba(255, 0, 0, 0.3); 
+} 
+
+.h1 span:nth-child(3), .h1 span:nth-child(4) { 
+  color: #000072; 
+  text-shadow: 4px 4px 0px #000055, 8px 8px 0px rgba(0, 0, 157, 0.3); 
+} 
+
+
+@keyframes crt-flicker { 
+  0% { opacity: 0.98; } 
+  50% { opacity: 1; } 
+  100% { opacity: 0.97; } 
+}
+}
+.navbar { 
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 60px; 
+  background-color: var(--nav-bg); 
+  display: flex; 
+  justify-content: flex-end; 
+  align-items: center; 
+  padding: 0 20px; 
+  box-sizing: border-box; 
+  backdrop-filter: blur(5px); 
+  z-index: 1000; 
+  transition: background-color var(--transition-speed) ease; 
+} 
+
+.settings-btn { 
+  background: none; 
+  border: none; 
+  cursor: pointer; 
+  color: var(--text-main); 
+  font-size: 24px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 8px; 
+  border-radius: 100%; 
+  transition: transform 0.3s ease;
+}
+
+.settings-btn:hover {
+  transform: rotate(45deg);
+}
+
+/* Settings Dropdown/Panel Container */
+.settings-panel {
+  display: none;
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  background-color: var(--panel-bg);
+  border: 4px solid var(--text-main);
+  padding: 20px;
+  width: 280px;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+  z-index: 1001;
+  border-radius: 8px;
+}
+
+.settings-panel.active {
+  display: block;
+}
+
+.settings-title {
+  font-size: 14px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid var(--text-main);
+  padding-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Styled control buttons inside settings */
+.control-btn {
+  background-color: var(--btn-bg);
+  color: var(--text-main);
+  border: 2px solid var(--text-main);
+  padding: 10px;
+  font-family: 'Press Start 2P', sans-serif;
+  font-size: 10px;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.control-btn:hover {
+  background-color: var(--btn-hover);
+}
+
+.content-wrapper {
+  padding: 100px 20px 20px 20px;
+}
+</style> 
+</head>
+<body>
+
+<nav class="navbar">
+  <button class="settings-btn" id="settingsToggleBtn" title="Open Settings">⚙️</button>
+</nav>
+
+<!-- New Settings Panel containing customized menu options -->
+<div class="settings-panel" id="settingsPanel">
+  <div class="settings-title">Options</div>
+  <div class="settings-group">
+    <button class="control-btn" id="themeToggle">🌓 Toggle Theme</button>
+    <button class="control-btn" onclick="alert('Audio toggled!')">🔊 Sound: ON</button>
+    <button class="control-btn" onclick="alert('Profile configurations...')">👤 Account Settings</button>
+    <button class="control-btn" onclick="alert('Data cleared successfully!')">🗑️ Clear Cache</button>
+    <button class="control-btn" onclick="alert('Opening Developer Console...')">🛠️ Advanced Tools</button>
+  </div>
+</div>
+
+<main class="content-wrapper">
+  <h1 class="h1"><span>W<span>C</span><span></span><span>XP</span></h1>
+  <p>Wildcat XP hub with fun games</p>
+</main>
+
+<script>
+  const settingsBtn = document.getElementById('settingsToggleBtn');
+  const settingsPanel = document.getElementById('settingsPanel');
+  const themeToggle = document.getElementById('themeToggle');
+
+  // Toggle settings dropdown layout
+  settingsBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    settingsPanel.classList.toggle('active');
+  });
+
+  // Close panel when clicking anywhere outside it
+  document.addEventListener('click', (e) => {
+    if (!settingsPanel.contains(e.target) && e.target !== settingsBtn) {
+      settingsPanel.classList.remove('active');
+    }
+  });
+
+  // Dynamic Theme Switching functionality
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    let newTheme = 'dark';
+    
+    if (currentTheme === 'dark') {
+      newTheme = 'light';
+    }
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+  });
+</script>
+
+</body>
+</html>
